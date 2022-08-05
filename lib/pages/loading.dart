@@ -15,84 +15,81 @@ class _LoadingState extends State<Loading> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer(const Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context,'/home');
+    Timer(const Duration(seconds: 5), () {
+      Navigator.pushReplacementNamed(context, '/login');
     });
-
   }
+
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          Container(
-            decoration: const BoxDecoration(color: Colors.greenAccent),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
-                flex: 2,
-                child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const <Widget>[
-                      CircleAvatar(
-                        backgroundColor: Colors.white,
-                        radius: 50.0,
-                        child: Icon(
-                          Icons.ev_station_outlined,
-                          color: Colors.greenAccent,
-                          size: 50.0,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 10.0),
-                      ),
-                      Text(
-                        "EV_GO",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 24.0),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 1,
+        body: Stack(
+      fit: StackFit.expand,
+      children: <Widget>[
+        Container(
+          decoration: const BoxDecoration(color: Colors.greenAccent),
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              flex: 2,
+              child: Container(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                        alignment: Alignment.topCenter,
-                        margin: const EdgeInsets.only(top: 20),
-                        child: CircularProgressIndicator(
-                          backgroundColor: Colors.white,
-                          color: Colors.teal[100],
-                        )
+                  children: const <Widget>[
+                    CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 50.0,
+                      child: Icon(
+                        Icons.ev_station_outlined,
+                        color: Colors.greenAccent,
+                        size: 50.0,
+                      ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 20.0),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10.0),
                     ),
-                    const Text(
+                    Text(
                       "EV_GO",
-                      softWrap: true,
-                      textAlign: TextAlign.center,
                       style: TextStyle(
+                          color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 18.0,
-                          color: Colors.white),
+                          fontSize: 24.0),
                     )
                   ],
                 ),
-              )
-            ],
-          )
-        ],
-
-      )
-    );
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                      alignment: Alignment.topCenter,
+                      margin: const EdgeInsets.only(top: 20),
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.white,
+                        color: Colors.teal[100],
+                      )),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 20.0),
+                  ),
+                  const Text(
+                    "EV_GO",
+                    softWrap: true,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                        color: Colors.white),
+                  )
+                ],
+              ),
+            )
+          ],
+        )
+      ],
+    ));
   }
 }
