@@ -1,0 +1,173 @@
+INSTRUCTIONS
+------------------------------------------------------------
+
+IMPORTANT: Please make sure your flutter project is migrated to dart sound null safety.
+
+1. Extract the zip
+
+2. Copy esewa_flutter_sdk folder to the root of your project
+
+3. Add the sdk path in pubspec.yaml dependencies as follows and run flutter pub get command in terminal:
+
+dependencies:
+  flutter:
+    sdk: flutter
+  esewa_flutter_sdk:
+    path: ./esewa_flutter_sdk
+
+4. IOS CONFIGURATION
+
+Currently, the IOS SDK supports Xcode 12.5 & Swift v5
+
+Also, IOS uses two different framework for release/App Store builds and simulator/testing builds.
+
+<STEP 1>
+
+BUILD     |  TODO
+
+RELEASE*  |  Copy the ios folder from IOS_RELEASE directory to esewa_flutter_sdk folder
+
+SIMULATOR |  Copy the ios folder from IOS_SIMULATOR directory to esewa_flutter_sdk folder
+
+*Used by default
+
+<STEP 2>
+
+open terminal in your project's ios module path and run pod install and restart your XCODE(
+Not doing this will show esewa_flutter_sdk import error in GeneratedPluginRegistrant.m file) 
+
+WARNING* Your IOS app won't build if you use the build desired for simulator in release/App Store builds.
+
+
+5. ANDROID CONFIGURATION
+
+<STEP 1>
+
+- Go to your project's root folder
+
+- Go to android folder > app > src > main > AndroidManifest.xml
+	
+inside <application/> tag :
+android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+
+..............
+.........
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+<application
+        android:label="your_app"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        android:icon="@mipmap/ic_launcher">
+
+<STEP 2>
+
+Android Gradle plugin & Kotlin version Update
+
+Since, the new android sdk lib comes packaged with AGP 7.0+, you are required to update your flutter project's gradle version to 7+
+
+- Go to your project's root folder
+
+- Go to android folder > build.gradle
+
+- Add the following:
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.0.2'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31'
+    }
+
+- Go to gradle folder > gradle-wrapper.properties
+
+- Add the following:
+	
+	distributionUrl=https\://services.gradle.org/distributions/gradle-7.0.2-all.zip
+
+- Sync your gradle 
+
+- Done
+
+
+5. How to use SDK for Payment?
+
+
+ESEWA CONFIG
+---------------------------------
+Environment environment
+String      clientId
+String      secretId
+
+NOTE*
+Use Environment.live for live credentials & then client Id and secret Key provided by Esewa
+
+Credentials For Test Env
+
+CLIENT_ID = JB0BBQ4aD0UqIThFJwAKBgAXEUkEGQUBBAwdOgABHD4DChwUAB0R
+SECRET_KEY = BhwIWQQADhIYSxILExMcAgFXFhcOBwAKBgAXEQ==
+
+ESEWA PAYMENT
+---------------------------------
+String productId : send unique product Id for the product you are paying for
+String productName: name of the product
+String amount: amount you are paying
+String call-back url : eSewa sends a copy of proof of payment to this URL after successful payment in live environment
+String ebpNo(optional) : This field is required in case of government payments.
+
+ESEWA PAYMENT SUCCESS RESULT
+--------------------------------------------------
+
+String productId
+String productName
+String totalAmount
+String environment
+String code
+String merchantName
+String message
+String date
+String status
+String refId
+
+
+HOW TO USE
+--------------------------------------------------
+
+
+  try {
+      EsewaFlutterSdk.initPayment(
+        esewaConfig: EsewaConfig(
+          environment: Environment.test,
+          clientId: CLIENT_ID,
+          secretId: SECRET_KEY,
+        ),
+        esewaPayment: EsewaPayment(
+          productId: "1d71jd81",
+          productName: "Product One",
+          productPrice: "20",
+          callbackUrl: "www.test-url.com",
+        ),
+          onPaymentSuccess: (EsewaPaymentSuccessResult data) {
+          debugPrint(":::SUCCESS::: => $data");
+        },
+        onPaymentFailure: (data) {
+          debugPrint(":::FAILURE::: => $data");
+        },
+        onPaymentCancellation: (data) {
+          debugPrint(":::CANCELLATION::: => $data");
+        },
+      );
+    } on Exception catch (e) {
+      debugPrint("EXCEPTION : ${e.toString()}");
+    }
+
+NOTE : <ebpNo> in EsewaPayment is an optional field; include it if you are making government payment. Your payment without <ebpNo> will be recognized as a normal payment.
+
+
+PAYMENT FAILURES/Cancellation
+------------------------------------------------------
+
+In case of payment failure and cancellation, onPaymentFailure and onPaymentCancellation callbacks are triggered which return the error message
+For more information regarding various cases of payment failures and cancellation,
+VISIT https://developer.esewa.com.np/#/android?id=error-cases-and-handling
+
+
+
+
