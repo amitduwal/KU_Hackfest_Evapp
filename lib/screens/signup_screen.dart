@@ -1,9 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:final_app/components/components.dart';
 import 'package:final_app/components/under_part.dart';
 import 'package:final_app/constants.dart';
 import 'package:final_app/screens/screens.dart';
 import 'package:final_app/widgets/widgets.dart';
+
+final eController = TextEditingController();
+final pController = TextEditingController();
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -55,12 +59,71 @@ class SignUpScreen extends StatelessWidget {
                         Form(
                           child: Column(
                             children: [
-                              const RoundedInputField(
-                                  hintText: "Email", icon: Icons.email),
+                              // const RoundedInputField(
+                              //     hintText: "Email", icon: Icons.email),
+
+                              TextFieldContainer(
+                                child: TextFormField(
+                                  controller: eController,
+                                  textInputAction: TextInputAction.next,
+                                  cursorColor: kPrimaryColor,
+                                  decoration: InputDecoration(
+                                      icon: Icon(
+                                        Icons.email,
+                                        color: kPrimaryColor,
+                                      ),
+                                      hintText: "Email",
+                                      hintStyle: const TextStyle(
+                                          fontFamily: 'OpenSans'),
+                                      border: InputBorder.none),
+                                ),
+                              ),
+
                               const RoundedInputField(
                                   hintText: "Name", icon: Icons.person),
-                              const RoundedPasswordField(),
-                              RoundedButton(text: 'REGISTER', press: () {}),
+
+                              // const RoundedPasswordField(),
+                              TextFieldContainer(
+                                child: TextFormField(
+                                  controller: pController,
+                                  textInputAction: TextInputAction.next,
+                                  obscureText: true,
+                                  cursorColor: kPrimaryColor,
+                                  decoration: const InputDecoration(
+                                      icon: Icon(
+                                        Icons.lock,
+                                        color: kPrimaryColor,
+                                      ),
+                                      hintText: "Password",
+                                      hintStyle:
+                                          TextStyle(fontFamily: 'OpenSans'),
+                                      suffixIcon: Icon(
+                                        Icons.visibility,
+                                        color: kPrimaryColor,
+                                      ),
+                                      border: InputBorder.none),
+                                ),
+                              ),
+
+                              RoundedButton(
+                                  text: 'REGISTER',
+                                  press: () async {
+                                    try {
+                                      await FirebaseAuth.instance
+                                          .createUserWithEmailAndPassword(
+                                              email: eController.text.trim(),
+                                              password:
+                                                  pController.text.trim());
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const LoginScreen()));
+                                    } on FirebaseAuthException catch (e) {
+                                      print(e);
+                                    }
+                                  }),
+
                               const SizedBox(
                                 height: 10,
                               ),

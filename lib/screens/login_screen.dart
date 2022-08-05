@@ -1,3 +1,4 @@
+import 'package:final_app/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:final_app/components/components.dart';
@@ -58,42 +59,45 @@ class LoginScreen extends StatelessWidget {
                         // ),
                         Form(
                           child: Column(
-                            children: [
+                            children: <Widget>[
                               // const RoundedInputField(
                               //     hintText: "Email", icon: Icons.email),
-                              TextField(
-                                controller: emailController,
-                                cursorColor: kPrimaryColor,
-                                decoration: InputDecoration(
-                                    icon: Icon(
-                                      Icons.email,
-                                      color: kPrimaryColor,
-                                    ),
-                                    hintText: "email",
-                                    hintStyle:
-                                        const TextStyle(fontFamily: 'OpenSans'),
-                                    border: InputBorder.none),
+                              TextFieldContainer(
+                                child: TextField(
+                                  controller: emailController,
+                                  cursorColor: kPrimaryColor,
+                                  decoration: InputDecoration(
+                                      icon: Icon(
+                                        Icons.email,
+                                        color: kPrimaryColor,
+                                      ),
+                                      hintText: "email",
+                                      hintStyle: const TextStyle(
+                                          fontFamily: 'OpenSans'),
+                                      border: InputBorder.none),
+                                ),
                               ),
 
                               // const RoundedPasswordField(),
-
-                              TextField(
-                                controller: passwordController,
-                                obscureText: true,
-                                cursorColor: kPrimaryColor,
-                                decoration: const InputDecoration(
-                                    icon: Icon(
-                                      Icons.lock,
-                                      color: kPrimaryColor,
-                                    ),
-                                    hintText: "Password",
-                                    hintStyle:
-                                        TextStyle(fontFamily: 'OpenSans'),
-                                    suffixIcon: Icon(
-                                      Icons.visibility,
-                                      color: kPrimaryColor,
-                                    ),
-                                    border: InputBorder.none),
+                              TextFieldContainer(
+                                child: TextField(
+                                  controller: passwordController,
+                                  obscureText: true,
+                                  cursorColor: kPrimaryColor,
+                                  decoration: const InputDecoration(
+                                      icon: Icon(
+                                        Icons.lock,
+                                        color: kPrimaryColor,
+                                      ),
+                                      hintText: "Password",
+                                      hintStyle:
+                                          TextStyle(fontFamily: 'OpenSans'),
+                                      suffixIcon: Icon(
+                                        Icons.visibility,
+                                        color: kPrimaryColor,
+                                      ),
+                                      border: InputBorder.none),
+                                ),
                               ),
 
                               // switchListTile(),
@@ -152,7 +156,26 @@ class LoginScreen extends StatelessWidget {
                                 color: kPrimaryLightColor,
                                 borderRadius: BorderRadius.circular(50),
                                 child: InkWell(
-                                  onTap: signin,
+                                  onTap: () async {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            ));
+                                    try {
+                                      await FirebaseAuth.instance
+                                          .signInWithEmailAndPassword(
+                                              email:
+                                                  emailController.text.trim(),
+                                              password: passwordController.text
+                                                  .trim());
+                                    } on FirebaseAuthException catch (e) {
+                                      print(e);
+                                    }
+                                    navigatorKey.currentState!
+                                        .popUntil((route) => route.isFirst);
+                                  },
                                   borderRadius: BorderRadius.circular(50),
                                   child: Container(
                                     width: 290,
@@ -246,8 +269,13 @@ iconButton(BuildContext context) {
   );
 }
 
-Future signin() async {
-  await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: emailController.text.trim(),
-      password: passwordController.text.trim());
-}
+// Future signin() async {
+//   showDialog(context: context, builder: builder)
+//   try {
+//     await FirebaseAuth.instance.signInWithEmailAndPassword(
+//         email: emailController.text.trim(),
+//         password: passwordController.text.trim());
+//   } on FirebaseAuthException catch (e) {
+//     print(e);
+//   }
+// }
