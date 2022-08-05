@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "622779395264",
+    "project_id": "evstation-5c1b8",
+    "storage_bucket": "evstation-5c1b8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:622779395264:android:4e9675df49b987bac91125",
+        "android_client_info": {
+          "package_name": "com.example.final_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "622779395264-buhtaq9kkeva18skgeskbncm4j9lakh1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9c92AOIOiLIJZOAqUEpoivV3UUjm58hA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "622779395264-buhtaq9kkeva18skgeskbncm4j9lakh1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,9 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:final_app/components/components.dart';
 import 'package:final_app/components/under_part.dart';
 import 'package:final_app/constants.dart';
 import 'package:final_app/screens/screens.dart';
 import 'package:final_app/widgets/widgets.dart';
+
+final emailController = TextEditingController();
+final passwordController = TextEditingController();
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -55,9 +59,43 @@ class LoginScreen extends StatelessWidget {
                         Form(
                           child: Column(
                             children: [
-                              const RoundedInputField(
-                                  hintText: "Email", icon: Icons.email),
-                              const RoundedPasswordField(),
+                              // const RoundedInputField(
+                              //     hintText: "Email", icon: Icons.email),
+                              TextField(
+                                controller: emailController,
+                                cursorColor: kPrimaryColor,
+                                decoration: InputDecoration(
+                                    icon: Icon(
+                                      Icons.email,
+                                      color: kPrimaryColor,
+                                    ),
+                                    hintText: "email",
+                                    hintStyle:
+                                        const TextStyle(fontFamily: 'OpenSans'),
+                                    border: InputBorder.none),
+                              ),
+
+                              // const RoundedPasswordField(),
+
+                              TextField(
+                                controller: passwordController,
+                                obscureText: true,
+                                cursorColor: kPrimaryColor,
+                                decoration: const InputDecoration(
+                                    icon: Icon(
+                                      Icons.lock,
+                                      color: kPrimaryColor,
+                                    ),
+                                    hintText: "Password",
+                                    hintStyle:
+                                        TextStyle(fontFamily: 'OpenSans'),
+                                    suffixIcon: Icon(
+                                      Icons.visibility,
+                                      color: kPrimaryColor,
+                                    ),
+                                    border: InputBorder.none),
+                              ),
+
                               // switchListTile(),
                               // RoundedButton(text: 'LOGIN', press: () {}),
                               // RoundedButton(
@@ -69,27 +107,44 @@ class LoginScreen extends StatelessWidget {
                               const SizedBox(
                                 height: 20,
                               ),
-                              Material(
-                                color: kPrimaryColor,
-                                borderRadius: BorderRadius.circular(50),
-                                child: InkWell(
-                                  onTap: () {},
-                                  borderRadius: BorderRadius.circular(50),
-                                  child: Container(
-                                    width: 290,
-                                    height: 50,
-                                    alignment: Alignment.center,
-                                    child: const Text(
-                                      'LOGIN',
-                                      style: TextStyle(
-                                        color: kPrimaryLightColor,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              // Material(
+                              //   color: kPrimaryColor,
+                              //   borderRadius: BorderRadius.circular(50),
+                              //   child: InkWell(
+                              //     onTap: () async {
+                              //       await FirebaseAuth.instance
+                              //           .signInWithEmailAndPassword(
+                              //               email: _emailController.text.trim(),
+                              //               password: _passwordlController.text
+                              //                   .trim());
+                              //     },
+                              //     borderRadius: BorderRadius.circular(50),
+                              //     child: Container(
+                              //       width: 290,
+                              //       height: 50,
+                              //       alignment: Alignment.center,
+                              //       child: const Text(
+                              //         'LOGIN',
+                              //         style: TextStyle(
+                              //           color: kPrimaryLightColor,
+                              //           fontWeight: FontWeight.bold,
+                              //           fontSize: 18,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
+
+                              // ElevatedButton(
+                              //     onPressed: () async {
+                              //       await FirebaseAuth.instance
+                              //           .signInWithEmailAndPassword(
+                              //               email: _emailController.text.trim(),
+                              //               password: _passwordController.text
+                              //                   .trim());
+                              //     },
+                              //     child: Text('signin')),
+
                               const SizedBox(
                                 height: 10,
                               ),
@@ -97,14 +152,14 @@ class LoginScreen extends StatelessWidget {
                                 color: kPrimaryLightColor,
                                 borderRadius: BorderRadius.circular(50),
                                 child: InkWell(
-                                  onTap: () {},
+                                  onTap: signin,
                                   borderRadius: BorderRadius.circular(50),
                                   child: Container(
                                     width: 290,
                                     height: 50,
                                     alignment: Alignment.center,
                                     child: const Text(
-                                      'GUEST',
+                                      'LOGIN',
                                       style: TextStyle(
                                         color: kPrimaryColor,
                                         fontWeight: FontWeight.bold,
@@ -189,4 +244,10 @@ iconButton(BuildContext context) {
       RoundedIcon(imageUrl: "assets/images/google.jpg"),
     ],
   );
+}
+
+Future signin() async {
+  await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: emailController.text.trim(),
+      password: passwordController.text.trim());
 }
