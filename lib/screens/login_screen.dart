@@ -1,3 +1,6 @@
+import 'package:email_validator/email_validator.dart';
+import 'package:final_app/main.dart';
+import 'package:final_app/widgets/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:final_app/components/components.dart';
@@ -8,9 +11,22 @@ import 'package:final_app/widgets/widgets.dart';
 
 final emailController = TextEditingController();
 final passwordController = TextEditingController();
+final fkey = GlobalKey<FormState>();
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  // @override
+  // void dispose() {
+  //   emailController.dispose();
+  //   passwordController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -44,107 +60,60 @@ class LoginScreen extends StatelessWidget {
                         const SizedBox(
                           height: 15,
                         ),
-                        // iconButton(context),
-                        // const SizedBox(
-                        //   height: 20,
-                        // ),
-                        // const Text(
-                        //   "or use your email account",
-                        //   style: TextStyle(
-                        //       color: Colors.grey,
-                        //       fontFamily: 'OpenSans',
-                        //       fontSize: 13,
-                        //       fontWeight: FontWeight.w600),
-                        // ),
                         Form(
+                          key: fkey,
                           child: Column(
-                            children: [
-                              // const RoundedInputField(
-                              //     hintText: "Email", icon: Icons.email),
-                              TextField(
-                                controller: emailController,
-                                cursorColor: kPrimaryColor,
-                                decoration: InputDecoration(
-                                    icon: Icon(
-                                      Icons.email,
-                                      color: kPrimaryColor,
-                                    ),
-                                    hintText: "email",
-                                    hintStyle:
-                                        const TextStyle(fontFamily: 'OpenSans'),
-                                    border: InputBorder.none),
+                            children: <Widget>[
+                              TextFieldContainer(
+                                child: TextFormField(
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  validator: (email) => email != null &&
+                                          !EmailValidator.validate(email)
+                                      ? 'Enter valid email'
+                                      : null,
+                                  controller: emailController,
+                                  cursorColor: kPrimaryColor,
+                                  decoration: InputDecoration(
+                                      icon: Icon(
+                                        Icons.email,
+                                        color: kPrimaryColor,
+                                      ),
+                                      hintText: "email",
+                                      hintStyle: const TextStyle(
+                                          fontFamily: 'OpenSans'),
+                                      border: InputBorder.none),
+                                ),
                               ),
-
-                              // const RoundedPasswordField(),
-
-                              TextField(
-                                controller: passwordController,
-                                obscureText: true,
-                                cursorColor: kPrimaryColor,
-                                decoration: const InputDecoration(
-                                    icon: Icon(
-                                      Icons.lock,
-                                      color: kPrimaryColor,
-                                    ),
-                                    hintText: "Password",
-                                    hintStyle:
-                                        TextStyle(fontFamily: 'OpenSans'),
-                                    suffixIcon: Icon(
-                                      Icons.visibility,
-                                      color: kPrimaryColor,
-                                    ),
-                                    border: InputBorder.none),
+                              TextFieldContainer(
+                                child: TextFormField(
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  validator: (password) =>
+                                      password != null && password.length < 6
+                                          ? 'Enter password greate than 6 digit'
+                                          : null,
+                                  controller: passwordController,
+                                  obscureText: true,
+                                  cursorColor: kPrimaryColor,
+                                  decoration: const InputDecoration(
+                                      icon: Icon(
+                                        Icons.lock,
+                                        color: kPrimaryColor,
+                                      ),
+                                      hintText: "Password",
+                                      hintStyle:
+                                          TextStyle(fontFamily: 'OpenSans'),
+                                      suffixIcon: Icon(
+                                        Icons.visibility,
+                                        color: kPrimaryColor,
+                                      ),
+                                      border: InputBorder.none),
+                                ),
                               ),
-
-                              // switchListTile(),
-                              // RoundedButton(text: 'LOGIN', press: () {}),
-                              // RoundedButton(
-                              //   text: 'GUEST',
-                              //   press: () {},
-                              //   textColor: Colors.green,
-
-                              // ),
                               const SizedBox(
                                 height: 20,
                               ),
-                              // Material(
-                              //   color: kPrimaryColor,
-                              //   borderRadius: BorderRadius.circular(50),
-                              //   child: InkWell(
-                              //     onTap: () async {
-                              //       await FirebaseAuth.instance
-                              //           .signInWithEmailAndPassword(
-                              //               email: _emailController.text.trim(),
-                              //               password: _passwordlController.text
-                              //                   .trim());
-                              //     },
-                              //     borderRadius: BorderRadius.circular(50),
-                              //     child: Container(
-                              //       width: 290,
-                              //       height: 50,
-                              //       alignment: Alignment.center,
-                              //       child: const Text(
-                              //         'LOGIN',
-                              //         style: TextStyle(
-                              //           color: kPrimaryLightColor,
-                              //           fontWeight: FontWeight.bold,
-                              //           fontSize: 18,
-                              //         ),
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
-
-                              // ElevatedButton(
-                              //     onPressed: () async {
-                              //       await FirebaseAuth.instance
-                              //           .signInWithEmailAndPassword(
-                              //               email: _emailController.text.trim(),
-                              //               password: _passwordController.text
-                              //                   .trim());
-                              //     },
-                              //     child: Text('signin')),
-
                               const SizedBox(
                                 height: 10,
                               ),
@@ -152,7 +121,29 @@ class LoginScreen extends StatelessWidget {
                                 color: kPrimaryLightColor,
                                 borderRadius: BorderRadius.circular(50),
                                 child: InkWell(
-                                  onTap: signin,
+                                  onTap: () async {
+                                    final isvalid =
+                                        fkey.currentState!.validate();
+                                    if (!isvalid) return;
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            ));
+                                    try {
+                                      await FirebaseAuth.instance
+                                          .signInWithEmailAndPassword(
+                                              email:
+                                                  emailController.text.trim(),
+                                              password: passwordController.text
+                                                  .trim());
+                                    } on FirebaseAuthException catch (e) {
+                                      Utils.showShackBar(e.message);
+                                    }
+                                    navigatorKey.currentState!
+                                        .popUntil((route) => route.isFirst);
+                                  },
                                   borderRadius: BorderRadius.circular(50),
                                   child: Container(
                                     width: 290,
@@ -244,10 +235,4 @@ iconButton(BuildContext context) {
       RoundedIcon(imageUrl: "assets/images/google.jpg"),
     ],
   );
-}
-
-Future signin() async {
-  await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: emailController.text.trim(),
-      password: passwordController.text.trim());
 }

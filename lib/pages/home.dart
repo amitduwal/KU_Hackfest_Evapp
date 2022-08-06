@@ -18,6 +18,11 @@ class _HomeState extends State<Home> {
         actions: [
           IconButton(
               onPressed: () {
+                // showDialog(
+                //     context: context,
+                //     builder: (context) => Center(
+                //           child: CircularProgressIndicator(),
+                //         ));
                 FirebaseAuth.instance.signOut();
               },
               icon: Icon(Icons.logout))
