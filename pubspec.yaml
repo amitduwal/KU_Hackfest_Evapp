@@ -37,6 +37,18 @@ dependencies:
   firebase_core: ^1.20.0
   firebase_auth: ^3.6.2
   email_validator: ^2.1.17
+  geolocator: ^9.0.1
+  google_maps_flutter: ^2.1.10
+  geocoding: ^2.0.4
+  http: 0.13.5
+  lottie: ^1.4.1
+  dartz: ^0.10.1
+  fab_circular_menu: ^1.0.2
+  flutter_polyline_points: ^1.0.0
+  flutter_rating_stars: ^1.0.3+4
+  flip_card: ^0.6.0
+  flutter_riverpod: ^1.0.4
+  khalti_flutter: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -62,11 +74,30 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/animassets/mapanimation.json
+    - assets/mapicons/
 
   fonts:
     - family: OpenSans
       fonts:
         - asset: assets/fonts/OpenSans.ttf
+    - family: WorkSans
+      fonts:
+        - asset: assets/fonts/WorkSans-Regular.ttf
+        - asset: assets/fonts/WorkSans-Italic.ttf
+          style: italic
+        - asset: assets/fonts/WorkSans-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/WorkSans-SemiBold.ttf
+          weight: 500
+        - asset: assets/fonts/WorkSans-Light.ttf
+          weight: 200
+        - asset: assets/fonts/WorkSans-Thin.ttf
+          weight: 300
+        - asset: assets/fonts/WorkSans-Medium.ttf
+          weight: 400
+        - asset: assets/fonts/WorkSans-ExtraLight.ttf
+          weight: 100
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

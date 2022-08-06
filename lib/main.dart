@@ -1,5 +1,4 @@
-import 'package:final_app/pages/home.dart';
-import 'package:final_app/pages/info.dart';
+import 'package:final_app/Maps/screens/home_page.dart';
 import 'package:final_app/pages/loading.dart';
 import 'package:final_app/screens/login_screen.dart';
 import 'package:final_app/screens/screens.dart';
@@ -7,11 +6,12 @@ import 'package:final_app/widgets/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -40,7 +40,7 @@ class _MyAppState extends State<MyApp> {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: ((context, snapshot) {
             if (snapshot.hasData) {
-              return Home();
+              return HomePage();
             } else if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
                 child: CircularProgressIndicator(),
@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> {
                 child: Text('Something went wrong'),
               );
             } else {
-              return LoginScreen();
+              return Loading();
             }
           }),
         ));

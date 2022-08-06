@@ -12,6 +12,7 @@ import 'package:final_app/widgets/widgets.dart';
 final emailController = TextEditingController();
 final passwordController = TextEditingController();
 final fkey = GlobalKey<FormState>();
+bool _isObscure = true;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -87,9 +88,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                           ? 'Enter password greate than 6 digit'
                                           : null,
                                   controller: passwordController,
-                                  obscureText: true,
+                                  obscureText: _isObscure,
                                   cursorColor: kPrimaryColor,
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
                                       icon: Icon(
                                         Icons.lock,
                                         color: kPrimaryColor,
@@ -97,8 +98,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                       hintText: "Password",
                                       hintStyle:
                                           TextStyle(fontFamily: 'OpenSans'),
-                                      suffixIcon: Icon(
-                                        Icons.visibility,
+                                      suffixIcon: IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            _isObscure = !_isObscure;
+                                          });
+                                        },
+                                        icon: Icon(_isObscure
+                                            ? Icons.visibility
+                                            : Icons.visibility_off),
                                         color: kPrimaryColor,
                                       ),
                                       border: InputBorder.none),
