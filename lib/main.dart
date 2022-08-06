@@ -27,13 +27,6 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    Loading();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return MaterialApp(
         scaffoldMessengerKey: Utils.messengerkey,
@@ -56,8 +49,6 @@ class _MyAppState extends State<MyApp> {
               return Center(
                 child: Text('Something went wrong'),
               );
-            } else if (!snapshot.hasData) {
-              return Loading();
             } else {
               return LoginScreen();
             }

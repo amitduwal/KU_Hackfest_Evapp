@@ -11,6 +11,7 @@ import 'package:final_app/widgets/widgets.dart';
 
 final eController = TextEditingController();
 final pController = TextEditingController();
+
 final formkey = GlobalKey<FormState>();
 
 class SignUpScreen extends StatefulWidget {
@@ -156,17 +157,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              UnderPart(
-                                title: "Already have an account?",
-                                navigatorText: "Login here",
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const LoginScreen()));
-                                },
-                              ),
+                              Text('Already have account?'),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    navigatorKey.currentState!
+                                        .popUntil((route) => route.isFirst);
+                                  },
+                                  child: Text('Login')),
                               const SizedBox(
                                 height: 20,
                               ),
