@@ -156,6 +156,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                   pController.text.trim());
                                     } on FirebaseAuthException catch (e) {
                                       Utils.showShackBar(e.message);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const LoginScreen()),
+                                      );
                                     }
                                     navigatorKey.currentState!
                                         .popUntil((route) => route.isFirst);

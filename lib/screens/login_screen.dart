@@ -139,14 +139,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   emailController.text.trim(),
                                               password: passwordController.text
                                                   .trim());
-                                    } on FirebaseAuthException catch (e) {
-                                      Utils.showShackBar(e.message);
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 const LoginScreen()),
                                       );
+                                    } on FirebaseAuthException catch (e) {
+                                      Utils.showShackBar(e.message);
                                     }
                                   },
                                   borderRadius: BorderRadius.circular(50),
