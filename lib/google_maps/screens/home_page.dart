@@ -16,6 +16,7 @@ import 'dart:ui' as ui;
 
 import '../models/auto_complete_result.dart';
 import '../services/map_services.dart';
+import '../providers/search_places.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -105,17 +106,20 @@ class _HomePageState extends ConsumerState<HomePage> {
         .asUint8List();
   }
 
-  void _setMarkerEv(point, String text) async {
+  void _setMarkerEv(LatLng latLng, String s) async {
     var counter = markerIdCounter++;
     final Uint8List markerIcon =
-        await getBytesFromAsset('assets/mapicons/automotive.png', 100);
+        await getBytesFromAsset('assets/mapicons/automotive.png', 75);
 
     final Marker marker = Marker(
         markerId: MarkerId('markerev_$counter'),
-        position: point,
+        position: latLng,
         onTap: () {},
-        infoWindow: InfoWindow(title: text),
+        infoWindow: InfoWindow(title: s),
         icon: BitmapDescriptor.fromBytes(markerIcon));
+
+    print('---------------position_rubin');
+    // print(point);
 
     setState(() {
       _markers.add(marker);
@@ -124,6 +128,8 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   loadMarkerEv() {
     _setMarkerEv(LatLng(27.7172, 85.3240), 'Kathmandu Ev Station');
+    print('k xa sathi ??????????????????????/--------------------');
+
     _setMarkerEv(
         LatLng(27.68459852890479, 85.41120564749042), 'KMC EV station');
     _setMarkerEv(LatLng(27.68656625538563, 85.33866987195383),
@@ -289,6 +295,8 @@ class _HomePageState extends ConsumerState<HomePage> {
     _pageController = PageController(initialPage: 1, viewportFraction: 0.85)
       ..addListener(_onScroll);
     super.initState();
+    print(
+        '--------------------------------?????????k xa sathi ??????????????????????/--------------------');
     loadMarkerEv();
   }
 
