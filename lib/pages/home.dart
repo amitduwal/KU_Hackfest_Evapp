@@ -15,19 +15,8 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         title: Text(user.email!),
-        actions: [
-          IconButton(
-              onPressed: () {
-                // showDialog(
-                //     context: context,
-                //     builder: (context) => Center(
-                //           child: CircularProgressIndicator(),
-                //         ));
-                FirebaseAuth.instance.signOut();
-              },
-              icon: Icon(Icons.logout))
-        ],
       ),
+      body: Center(),
     );
   }
 }
