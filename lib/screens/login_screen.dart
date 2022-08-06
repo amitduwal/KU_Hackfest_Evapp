@@ -125,12 +125,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                     final isvalid =
                                         fkey.currentState!.validate();
                                     if (!isvalid) return;
-                                    // showDialog(
-                                    //     context: context,
-                                    //     builder: (context) => Center(
-                                    //           child:
-                                    //               CircularProgressIndicator(),
-                                    //         ));
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            ));
                                     try {
                                       await FirebaseAuth.instance
                                           .signInWithEmailAndPassword(

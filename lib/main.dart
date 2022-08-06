@@ -16,9 +16,23 @@ Future main() async {
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Loading();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -42,8 +56,10 @@ class MyApp extends StatelessWidget {
               return Center(
                 child: Text('Something went wrong'),
               );
-            } else {
+            } else if (!snapshot.hasData) {
               return Loading();
+            } else {
+              return LoginScreen();
             }
           }),
         ));
