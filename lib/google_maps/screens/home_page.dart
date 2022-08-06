@@ -114,7 +114,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     final Marker marker = Marker(
         markerId: MarkerId('markerev_$counter'),
         position: latLng,
-        onTap: () {},
+        onTap: () => {showAlertDialog(context)},
         infoWindow: InfoWindow(title: s),
         icon: BitmapDescriptor.fromBytes(markerIcon));
 
@@ -1351,4 +1351,145 @@ class _HomePageState extends ConsumerState<HomePage> {
       ),
     );
   }
+}
+
+showAlertDialog(BuildContext context) {
+  Widget okButton = FlatButton(
+    child: Text("OK"),
+    onPressed: () {
+      Navigator.of(context).pop();
+    },
+  );
+
+  // Create AlertDialog
+  Size size = MediaQuery.of(context).size;
+  Container alert = Container(
+    // title: Text("Simple Alert"),
+    // content: Text("This is an alert message."),
+    padding: EdgeInsets.all(10.0),
+    margin: EdgeInsets.fromLTRB(20, 250, 20, 10),
+    height: double.infinity,
+    alignment: Alignment.center,
+    color: Colors.white,
+    child: SingleChildScrollView(
+      child: Column(
+        children: [
+          Icon(
+            Icons.electric_car,
+            size: 80,
+            color: Colors.blueGrey,
+          ),
+          SizedBox(height: 20),
+          Text(
+            'Kathmandu EV station',
+            style: TextStyle(
+                fontSize: 18,
+                decoration: TextDecoration.none,
+                color: Colors.black),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          GestureDetector(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(children: [
+                  Icon(
+                    Icons.charging_station,
+                    color: Colors.greenAccent,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text('2',
+                      style: TextStyle(
+                          decoration: TextDecoration.none,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.0))
+                ]),
+                SizedBox(
+                  width: 50,
+                ),
+                Column(children: [
+                  Icon(
+                    Icons.currency_rupee,
+                    color: Colors.greenAccent,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    '200',
+                    style: TextStyle(
+                        decoration: TextDecoration.none,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.0),
+                  )
+                ]),
+                SizedBox(
+                  width: 40,
+                ),
+                Column(children: [
+                  Icon(
+                    Icons.location_pin,
+                    color: Colors.greenAccent,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text('200 km',
+                      style: TextStyle(
+                          decoration: TextDecoration.none,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.0))
+                ]),
+                SizedBox(
+                  width: 20,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Material(
+            color: Colors.greenAccent,
+            borderRadius: BorderRadius.circular(50),
+            child: InkWell(
+              onTap: () {},
+              borderRadius: BorderRadius.circular(50),
+              child: Container(
+                width: 290,
+                height: 50,
+                alignment: Alignment.center,
+                child: const Text(
+                  'BOOK',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          // actions: [
+          //   okButton,
+          // ],
+        ],
+      ),
+    ),
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }
