@@ -3,6 +3,7 @@ import 'package:final_app/pages/info.dart';
 import 'package:final_app/pages/loading.dart';
 import 'package:final_app/screens/login_screen.dart';
 import 'package:final_app/screens/screens.dart';
+import 'package:final_app/widgets/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        scaffoldMessengerKey: Utils.messengerkey,
         navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
@@ -41,7 +43,7 @@ class MyApp extends StatelessWidget {
                 child: Text('Something went wrong'),
               );
             } else {
-              return LoginScreen();
+              return Loading();
             }
           }),
         ));

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:final_app/screens/screens.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -15,8 +16,11 @@ class _LoadingState extends State<Loading> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer(const Duration(seconds: 5), () {
-      Navigator.pushReplacementNamed(context, '/login');
+    Timer(const Duration(seconds: 2), () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+      );
     });
   }
 

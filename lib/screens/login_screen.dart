@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:final_app/main.dart';
+import 'package:final_app/widgets/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:final_app/components/components.dart';
@@ -12,8 +13,20 @@ final emailController = TextEditingController();
 final passwordController = TextEditingController();
 final fkey = GlobalKey<FormState>();
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  // @override
+  // void dispose() {
+  //   emailController.dispose();
+  //   passwordController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -112,12 +125,12 @@ class LoginScreen extends StatelessWidget {
                                     final isvalid =
                                         fkey.currentState!.validate();
                                     if (!isvalid) return;
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) => Center(
-                                              child:
-                                                  CircularProgressIndicator(),
-                                            ));
+                                    // showDialog(
+                                    //     context: context,
+                                    //     builder: (context) => Center(
+                                    //           child:
+                                    //               CircularProgressIndicator(),
+                                    //         ));
                                     try {
                                       await FirebaseAuth.instance
                                           .signInWithEmailAndPassword(
@@ -126,11 +139,7 @@ class LoginScreen extends StatelessWidget {
                                               password: passwordController.text
                                                   .trim());
                                     } on FirebaseAuthException catch (e) {
-                                      showDialog(
-                                          context: context,
-                                          builder: (context) => AlertDialog(
-                                                title: Text('oops error'),
-                                              ));
+                                      Utils.showShackBar(e.message);
                                     }
                                     navigatorKey.currentState!
                                         .popUntil((route) => route.isFirst);

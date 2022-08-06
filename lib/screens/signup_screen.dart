@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:final_app/main.dart';
+import 'package:final_app/widgets/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:final_app/components/components.dart';
@@ -12,9 +13,14 @@ final eController = TextEditingController();
 final pController = TextEditingController();
 final formkey = GlobalKey<FormState>();
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -141,7 +147,7 @@ class SignUpScreen extends StatelessWidget {
                                               password:
                                                   pController.text.trim());
                                     } on FirebaseAuthException catch (e) {
-                                      print(e);
+                                      Utils.showShackBar(e.message);
                                     }
                                     navigatorKey.currentState!
                                         .popUntil((route) => route.isFirst);
