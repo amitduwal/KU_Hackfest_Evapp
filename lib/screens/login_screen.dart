@@ -141,9 +141,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   .trim());
                                     } on FirebaseAuthException catch (e) {
                                       Utils.showShackBar(e.message);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const LoginScreen()),
+                                      );
                                     }
-                                    navigatorKey.currentState!
-                                        .popUntil((route) => route.isFirst);
                                   },
                                   borderRadius: BorderRadius.circular(50),
                                   child: Container(
