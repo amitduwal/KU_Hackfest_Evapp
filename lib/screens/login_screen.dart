@@ -141,6 +141,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                               password: passwordController.text
                                                   .trim());
 
+                                      emailController.clear();
+                                      passwordController.clear();
+
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(

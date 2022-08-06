@@ -154,6 +154,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               email: eController.text.trim(),
                                               password:
                                                   pController.text.trim());
+                                      emailController.clear();
+                                      passwordController.clear();
                                     } on FirebaseAuthException catch (e) {
                                       Utils.showShackBar(e.message);
                                     }
