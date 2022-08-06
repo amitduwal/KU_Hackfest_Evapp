@@ -54,7 +54,7 @@ class _LoadingState extends State<Loading> {
                       padding: EdgeInsets.only(top: 10.0),
                     ),
                     Text(
-                      "EV_GO",
+                      "NepEv",
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -80,7 +80,7 @@ class _LoadingState extends State<Loading> {
                     padding: EdgeInsets.only(top: 20.0),
                   ),
                   const Text(
-                    "EV_GO",
+                    "NepEv",
                     softWrap: true,
                     textAlign: TextAlign.center,
                     style: TextStyle(
