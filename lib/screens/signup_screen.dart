@@ -11,8 +11,8 @@ import 'package:final_app/widgets/widgets.dart';
 
 final eController = TextEditingController();
 final pController = TextEditingController();
-
 final formkey = GlobalKey<FormState>();
+bool _isObscure = true;
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -110,9 +110,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           : null,
                                   controller: pController,
                                   textInputAction: TextInputAction.next,
-                                  obscureText: true,
+                                  obscureText: _isObscure,
                                   cursorColor: kPrimaryColor,
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
                                       icon: Icon(
                                         Icons.lock,
                                         color: kPrimaryColor,
@@ -120,8 +120,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       hintText: "Password",
                                       hintStyle:
                                           TextStyle(fontFamily: 'OpenSans'),
-                                      suffixIcon: Icon(
-                                        Icons.visibility,
+                                      suffixIcon: IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            _isObscure = !_isObscure;
+                                          });
+                                        },
+                                        icon: Icon(_isObscure
+                                            ? Icons.visibility_off
+                                            : Icons.visibility),
                                         color: kPrimaryColor,
                                       ),
                                       border: InputBorder.none),

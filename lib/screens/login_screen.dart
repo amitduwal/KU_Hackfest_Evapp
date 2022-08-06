@@ -106,8 +106,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                           });
                                         },
                                         icon: Icon(_isObscure
-                                            ? Icons.visibility
-                                            : Icons.visibility_off),
+                                            ? Icons.visibility_off
+                                            : Icons.visibility),
                                         color: kPrimaryColor,
                                       ),
                                       border: InputBorder.none),
