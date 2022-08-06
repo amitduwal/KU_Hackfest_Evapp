@@ -1,4 +1,5 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:final_app/google_maps/screens/home_page.dart';
 import 'package:final_app/main.dart';
 import 'package:final_app/widgets/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -138,11 +139,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   emailController.text.trim(),
                                               password: passwordController.text
                                                   .trim());
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const HomePage()),
+                                      );
                                     } on FirebaseAuthException catch (e) {
                                       Utils.showShackBar(e.message);
                                     }
-                                    navigatorKey.currentState!
-                                        .popUntil((route) => route.isFirst);
                                   },
                                   borderRadius: BorderRadius.circular(50),
                                   child: Container(

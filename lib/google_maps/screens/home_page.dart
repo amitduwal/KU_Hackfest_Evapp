@@ -2,10 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:fab_circular_menu/fab_circular_menu.dart';
-import 'package:final_app/google_maps/models/auto_complete_result.dart';
 import 'package:final_app/google_maps/providers/search_places.dart';
-import 'package:final_app/google_maps/services/map_services.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,6 +13,10 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'dart:ui' as ui;
+
+import '../models/auto_complete_result.dart';
+import '../services/map_services.dart';
+import '../providers/search_places.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -105,16 +106,20 @@ class _HomePageState extends ConsumerState<HomePage> {
         .asUint8List();
   }
 
-  void _setMarkerEv(point, String text) async {
+  void _setMarkerEv(LatLng latLng, String s) async {
     var counter = markerIdCounter++;
     final Uint8List markerIcon =
         await getBytesFromAsset('assets/mapicons/automotive.png', 75);
 
     final Marker marker = Marker(
         markerId: MarkerId('markerev_$counter'),
-        position: point,
+        position: latLng,
         onTap: () {},
+        infoWindow: InfoWindow(title: s),
         icon: BitmapDescriptor.fromBytes(markerIcon));
+
+    print('---------------position_rubin');
+    // print(point);
 
     setState(() {
       _markers.add(marker);
@@ -123,6 +128,94 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   loadMarkerEv() {
     _setMarkerEv(LatLng(27.7172, 85.3240), 'Kathmandu Ev Station');
+    print('k xa sathi ??????????????????????/--------------------');
+
+    _setMarkerEv(
+        LatLng(27.68459852890479, 85.41120564749042), 'KMC EV station');
+    _setMarkerEv(LatLng(27.68656625538563, 85.33866987195383),
+        'Civil Service EV station');
+    _setMarkerEv(
+        LatLng(26.679091070440393, 87.6867315522346), 'New Amda EV station');
+    _setMarkerEv(LatLng(26.576475130500278, 88.07778683051427),
+        'Chandragiri EV station');
+    _setMarkerEv(
+        LatLng(26.57499655512588, 87.8302896869024), 'Pathivara EV station');
+    _setMarkerEv(
+        LatLng(26.491221894767232, 87.26459476011038), 'Biratnagar EV station');
+    _setMarkerEv(
+        LatLng(26.680029761745857, 87.2356711873441), 'Itahari EV station');
+    _setMarkerEv(
+        LatLng(27.046464795619425, 84.90042375193129), 'Birgunj EV station');
+    _setMarkerEv(
+        LatLng(27.163705338305512, 84.97952866274093), 'Simara EV station');
+    _setMarkerEv(LatLng(27.16805704267558, 85.35731328974694),
+        'Chandranigahapur EV station');
+    _setMarkerEv(
+        LatLng(26.9508791376429, 85.80012870516057), 'Dhalkebar EV station');
+    _setMarkerEv(
+        LatLng(26.727328651509946, 85.94059939552218), 'Janakpur EV station');
+    _setMarkerEv(
+        LatLng(26.99095524026789, 85.89382463795106), 'Bardibas  EV station');
+    _setMarkerEv(
+        LatLng(26.510844742581412, 86.73792836446434), 'Rajbiraj EV station');
+    _setMarkerEv(LatLng(27.80970731264833, 84.8330241586965),
+        'Malekhu Bazar EV station');
+    _setMarkerEv(
+        LatLng(27.800341730468094, 84.87290522768122), 'Dhading EV station');
+    _setMarkerEv(LatLng(27.280737479801832, 85.95503839738389),
+        'Sindhuli Gadhi EV staion');
+    _setMarkerEv(LatLng(27.267396539222965, 85.9501353197192),
+        'Selfie Danda EV station');
+    _setMarkerEv(LatLng(27.442248069766745, 84.9990221635553),
+        'Hetauda Park EV station');
+    _setMarkerEv(
+        LatLng(27.466801778887962, 84.91729719293386), 'Tapoban EV station');
+    _setMarkerEv(
+        LatLng(27.678442970573236, 84.43086771539187), 'Bharatpur EV station');
+    _setMarkerEv(LatLng(27.686091103349753, 84.42996649319537),
+        'Chitwan Medical College EV station');
+    _setMarkerEv(
+        LatLng(27.767280637327623, 84.4697639108882), 'Muglin EV station');
+    _setMarkerEv(
+        LatLng(27.76092938063862, 84.47507468475278), 'Pathivara EV station');
+    _setMarkerEv(
+        LatLng(27.877909887316335, 84.62122931089075), 'Kurintar EV station');
+    _setMarkerEv(
+        LatLng(27.872323837250203, 84.60081233598251), 'Manakamana EV station');
+    _setMarkerEv(
+        LatLng(27.62983788196194, 85.52509728587273), 'Banepa EV station');
+    _setMarkerEv(
+        LatLng(27.6884687462591, 85.33402919609276), 'Nawalpur EV station');
+    _setMarkerEv(
+        LatLng(27.97647398709559, 84.26769592286155), 'Damauli EV station');
+    _setMarkerEv(
+        LatLng(28.099805586494945, 83.871481900019), 'Syangja EV station');
+    _setMarkerEv(LatLng(28.19958844610147, 83.97830010904902),
+        'Pokhara Airport EV station');
+    _setMarkerEv(LatLng(28.210177826416693, 83.95571135322726),
+        'Pokhara Lakeside EV station');
+    _setMarkerEv(
+        LatLng(28.23801787463195, 83.98417831089921), 'Bindabasini EV station');
+    _setMarkerEv(
+        LatLng(28.101179195379782, 81.66737268390958), 'Nepalgunj EV station');
+    _setMarkerEv(
+        LatLng(27.842128785741902, 82.76582462823465), 'Bhalubang EV station');
+    _setMarkerEv(
+        LatLng(28.034308636052618, 82.48604478755949), 'Dang EV station');
+    _setMarkerEv(
+        LatLng(27.513738375195498, 83.45152909164501), 'Rupandehi EV station');
+    _setMarkerEv(
+        LatLng(27.552341336382344, 83.79820806855443), 'Bardaghat EV station');
+    _setMarkerEv(
+        LatLng(27.58172136875496, 83.64733279923995), 'Sunawala EV station');
+    _setMarkerEv(
+        LatLng(28.581117281051363, 81.63198733139176), 'Surkhet EV station');
+    _setMarkerEv(LatLng(28.961240687373536, 80.14780479742312),
+        'Mahendranagar EV station');
+    _setMarkerEv(
+        LatLng(28.752933230343572, 80.58324459926736), 'Dhangadhi EV station');
+    _setMarkerEv(
+        LatLng(29.297330285530542, 80.5905532844028), 'Dadeldhura EV station');
   }
 
   Future<Position> getUserCurrentLocation() async {
@@ -202,6 +295,9 @@ class _HomePageState extends ConsumerState<HomePage> {
     _pageController = PageController(initialPage: 1, viewportFraction: 0.85)
       ..addListener(_onScroll);
     super.initState();
+    print(
+        '--------------------------------?????????k xa sathi ??????????????????????/--------------------');
+    loadMarkerEv();
   }
 
   void _onScroll() {
@@ -238,19 +334,8 @@ class _HomePageState extends ConsumerState<HomePage> {
     //Providers
     final allSearchResults = ref.watch(placeResultsProvider);
     final searchFlag = ref.watch(searchToggleProvider);
-    final user = FirebaseAuth.instance.currentUser!;
 
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(user.email!),
-      //   actions: [
-      //     IconButton(
-      //         onPressed: () {
-      //           FirebaseAuth.instance.signOut();
-      //         },
-      //         icon: Icon(Icons.logout))
-      //   ],
-      // ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -268,7 +353,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                     onMapCreated: (GoogleMapController controller) {
                       _controller.complete(controller);
                     },
-                    onTap: loadMarkerEv(),
                   ),
                 ),
                 searchToggle
@@ -311,7 +395,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                       _markers = {};
                                     }
 
-                                    List searchResults =
+                                    List<AutoCompleteResult> searchResults =
                                         await MapServices().searchPlaces(value);
 
                                     allSearchResults.setResults(searchResults);
@@ -846,12 +930,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 });
               },
               icon: Icon(Icons.my_location_outlined),
-            ),
-            IconButton(
-                onPressed: () {
-                  FirebaseAuth.instance.signOut();
-                },
-                icon: Icon(Icons.logout))
+            )
           ]),
     );
   }
