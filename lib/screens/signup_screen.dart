@@ -23,6 +23,13 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   @override
+  void dispose() {
+    eController.dispose();
+    pController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
@@ -157,13 +164,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              Text('Already have account?'),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    navigatorKey.currentState!
-                                        .popUntil((route) => route.isFirst);
-                                  },
-                                  child: Text('Login')),
+                              UnderPart(
+                                title: "Already have an account?",
+                                navigatorText: "Login here",
+                                onTap: () {
+                                  navigatorKey.currentState!
+                                      .popUntil((route) => route.isFirst);
+                                },
+                              ),
                               const SizedBox(
                                 height: 20,
                               ),
