@@ -1,4 +1,5 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:final_app/Maps/screens/home_page.dart';
 import 'package:final_app/main.dart';
 import 'package:final_app/widgets/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -143,7 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const LoginScreen()),
+                                                const HomePage()),
                                       );
                                     } on FirebaseAuthException catch (e) {
                                       Utils.showShackBar(e.message);
