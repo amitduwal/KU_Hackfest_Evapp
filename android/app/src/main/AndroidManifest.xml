@@ -1,9 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.final_app">
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Include only if your app benefits from precise location access. -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
    <application
         android:label="final_app"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyDf5GmOWGjc3gBqOAqhVjH5VhU2CZPa-eI"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
