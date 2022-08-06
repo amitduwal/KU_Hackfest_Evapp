@@ -1,3 +1,5 @@
+import 'package:email_validator/email_validator.dart';
+import 'package:final_app/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:final_app/components/components.dart';
@@ -8,6 +10,7 @@ import 'package:final_app/widgets/widgets.dart';
 
 final eController = TextEditingController();
 final pController = TextEditingController();
+final formkey = GlobalKey<FormState>();
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -57,6 +60,7 @@ class SignUpScreen extends StatelessWidget {
                               fontWeight: FontWeight.w600),
                         ),
                         Form(
+                          key: formkey,
                           child: Column(
                             children: [
                               // const RoundedInputField(
@@ -64,6 +68,12 @@ class SignUpScreen extends StatelessWidget {
 
                               TextFieldContainer(
                                 child: TextFormField(
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  validator: (email) => email != null &&
+                                          !EmailValidator.validate(email)
+                                      ? 'Enter valid email'
+                                      : null,
                                   controller: eController,
                                   textInputAction: TextInputAction.next,
                                   cursorColor: kPrimaryColor,
@@ -85,6 +95,12 @@ class SignUpScreen extends StatelessWidget {
                               // const RoundedPasswordField(),
                               TextFieldContainer(
                                 child: TextFormField(
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  validator: (password) =>
+                                      password != null && password.length < 6
+                                          ? 'Enter password greate than 6 digit'
+                                          : null,
                                   controller: pController,
                                   textInputAction: TextInputAction.next,
                                   obscureText: true,
@@ -108,20 +124,27 @@ class SignUpScreen extends StatelessWidget {
                               RoundedButton(
                                   text: 'REGISTER',
                                   press: () async {
+                                    final isvalid =
+                                        formkey.currentState!.validate();
+                                    if (!isvalid) return;
+
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            ));
                                     try {
                                       await FirebaseAuth.instance
                                           .createUserWithEmailAndPassword(
                                               email: eController.text.trim(),
                                               password:
                                                   pController.text.trim());
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const LoginScreen()));
                                     } on FirebaseAuthException catch (e) {
                                       print(e);
                                     }
+                                    navigatorKey.currentState!
+                                        .popUntil((route) => route.isFirst);
                                   }),
 
                               const SizedBox(
